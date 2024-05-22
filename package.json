@@ -1,0 +1,34 @@
+{
+  "name": "connectdb",
+  "version": "1.0.0",
+  "description": "its used to uniformly connect any database to your nodejs project ",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AryanMankame/connectdb.git"
+  },
+  "keywords": [
+    "npm",
+    "database",
+    "mongodb",
+    "postgresql",
+    "mysql",
+    "sqlite",
+    "appwrite"
+  ],
+  "author": "Aryan Mankame",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AryanMankame/connectdb/issues"
+  },
+  "homepage": "https://github.com/AryanMankame/connectdb#readme",
+  "dependencies": {
+    "mongodb": "^6.6.2"
+  }
+}
