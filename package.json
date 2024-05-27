@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/AryanMankame/connectdb#readme",
   "dependencies": {
-    "mongodb": "^6.6.2"
+    "mongodb": "^6.6.2",
+    "mongoose": "^8.4.0"
   }
 }

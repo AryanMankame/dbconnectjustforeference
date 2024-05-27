@@ -13,41 +13,93 @@ class DatabaseConnectSimplifier {
     await this.connector.connect();
   }
 
-  async createCollection(collectionName) {
+  async createStore(collectionName, schema) {
     if (!this.connector) {
       throw new Error('Connector not initialized');
     }
-    await this.connector.createCollection(collectionName);
+    await this.connector.createStore(collectionName, schema);
   }
-  
-  async createDocument(collectionName,documentData){
-    if (!this.connector) {
-      throw new Error('Connector not initialized');
+  async insertItem(collectionName, documentData) {
+    if(!this.connector) {
+      throw new Error('Database not connected problem');
     }
-    console.log(collectionName,documentData);
-    await this.connector.createDocument(collectionName,documentData);
+    await this.connector.insertItem(collectionName, documentData);
   }
-
-  async readCollection(collectionName, query = {}) {
+  async readStore(collectionName, query = {}) {
     if (!this.connector) {
       throw new Error('Connector not initialized');
     }
     return this.connector.readCollection(collectionName, query);
   }
 
-  async updateCollection(collectionName, query, update) {
+  async updateItems(collectionName, query, update) {
     if (!this.connector) {
       throw new Error('Connector not initialized');
     }
-    return this.connector.updateCollection(collectionName, query, update);
+    return this.connector.updateItems(collectionName, query, update);
   }
 
-  async deleteCollection(collectionName) {
+  async deleteStore(collectionName) {
     if (!this.connector) {
       throw new Error('Connector not initialized');
     }
-    await this.connector.deleteCollection(collectionName);
+    await this.connector.deleteStore(collectionName);
   }
+  async alterStore(storeName, newSchema) {
+    if(!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    await this.connector.alterStore(storeName, newSchema);
+  }
+  async getmydb() {
+    if (!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    return this.connector;
+  }
+  async dropItem(storeName, itemInfo) {
+    if (!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    await this.connector.dropItem(storeName, itemInfo);
+    console.log('Item successfully dropped')
+  }
+  
+  async dropItems(storeName, itemInfo) {
+    if (!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    await this.connector.dropItems(storeName, itemInfo);
+    console.log('Items successfully dropped')
+  }
+  
+  async truncateStore(storeName) {
+    if(!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    await this.connector.truncateStore(storeName);
+  }
+
+  async alterStore(storeName, newSchema, changeValues) {
+    if(!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    await this.connector.alterStore(storeName , newSchema, changeValues);
+  }
+
+  async createTrigger(firststoreName,operationsToBePerformed) {
+    if(!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    await this.connector.createTrigger(firststoreName, operationsToBePerformed );
+  }
+
+  async findAndPopulateItem(storeName, operationsToBePerformed, query) {
+    if(!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    return await this.connector.findAndPopulateItem(storeName, operationsToBePerformed, query);
+  } 
 
 
   async disconnect() {
@@ -58,3 +110,5 @@ class DatabaseConnectSimplifier {
 }
 
 module.exports = DatabaseConnectSimplifier;
+
+
