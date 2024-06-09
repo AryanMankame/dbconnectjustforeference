@@ -45,6 +45,10 @@ const config = {
   },
 };
 
+function getRandom(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 const userSchema = {
   name: {
     type: Number,
@@ -76,18 +80,56 @@ async function main() {
       name: String,
       description: String
     });
-    const res = await db.findAndPopulateItem('teacher', {
-      path : 'subjects',
-      populate : {
-        path : 'courses'
-      }
-    },
-    { name : 'teacher_1'});
-    res.forEach((item) => {
-      item.subjects.forEach((course) => {
-        console.log(course.courses)
-      })
-    });
+    await db.createStore('users',userSchema);
+    await db.createStore('orders', {
+      customer_id : Number,
+      amount : Number
+    })
+    await db.createStore('customers', {
+      id : Number,
+      name : String
+    })
+    // for(let i = 10; i < 11; i++) {
+    //   await db.insertItem('orders',{
+    //     customer_id : i,
+    //     amount : i*1000
+    //   })
+    //   await db.insertItem('customers', { 
+    //     id : i,
+    //     name : `user_${i}`
+    //   })
+    // }
+    // await db.insertItem('orders', { customer_id : 10, amount : 500003});
+    const ljoin = await db.leftJoin('orders','customers',['customer_id','id']);
+    const rjoin = await db.rightJoin('orders','customers',['customer_id','id']);
+    const eqjoin = await db.equiJoin('orders','customers',['customer_id','id']);
+    console.log(ljoin.length,rjoin.length,eqjoin.length);
+    // for(let i=0; i < 10; i++){
+    //   await db.insertItem('course',{name: `course_${i}`, description : `I am course ${i}` });
+    // }
+    // await db.createRollback([
+    //   async () => { await db.insertItem('course', { name : 'course_19' , description : 'Im course_19' ,}); console.log('course insertion successful!!') },
+    //   async () => { await db.insertItem('users' , { name : 'course 14' , email : 'user14@gmail.com'}); console.log('user insertion successful!!'); },
+    // ])
+    // await db.alterStore('course', {
+    //   name: String,
+    //   description : String,
+    // },{ });
+    // console.log(db.readStore('course'));
+    // console.log(await db.readStore('course',{}));
+    
+    // const res = await db.findAndPopulateItem('teacher', {
+    //   path : 'subjects',
+    //   populate : {
+    //     path : 'courses'
+    //   }
+    // },
+    // { name : 'teacher_1'});
+    // res.forEach((item) => {
+    //   item.subjects.forEach((course) => {
+    //     console.log(course.courses)
+    //   })
+    // });
     // for(let i=0; i<5; i++) {
       // await db.insertItem('course' , {
       //   name : `course_${i}`,

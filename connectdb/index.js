@@ -29,7 +29,7 @@ class DatabaseConnectSimplifier {
     if (!this.connector) {
       throw new Error('Connector not initialized');
     }
-    return this.connector.readCollection(collectionName, query);
+    return this.connector.readStore(collectionName, query);
   }
 
   async updateItems(collectionName, query, update) {
@@ -94,14 +94,41 @@ class DatabaseConnectSimplifier {
     await this.connector.createTrigger(firststoreName, operationsToBePerformed );
   }
 
-  async findAndPopulateItem(storeName, operationsToBePerformed, query) {
+  async findAndPopulateItem(storeName, thingsToBePopulated, query) {
     if(!this.connector) {
       throw new Error('Connector not initialized');
     }
-    return await this.connector.findAndPopulateItem(storeName, operationsToBePerformed, query);
+    return await this.connector.findAndPopulateItem(storeName, thingsToBePopulated, query);
   } 
 
+  async leftJoin(firstStore, secondStore, performOn) {
+    if(!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    return await this.connector.leftJoin(firstStore, secondStore, performOn);
+  }
 
+  async rightJoin(firstStore, secondStore, performOn) {
+    if(!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    return await this.connector.rightJoin(firstStore, secondStore, performOn);
+  }
+
+  async equiJoin(firstStore, secondStore, performOn) {
+    if(!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    return await this.connector.equiJoin(firstStore, secondStore, performOn);
+  }
+
+  
+  async createRollback(callbackFunctions) {
+    if(!this.connector) {
+      throw new Error('Connector not initialized');
+    }
+    await this.connector.createRollback(callbackFunctions);
+  }
   async disconnect() {
     if (this.connector) {
       await this.connector.disconnect();
